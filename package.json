@@ -1,0 +1,49 @@
+{
+    "name": "cano-template",
+    "version": "1.0.0",
+    "description": "This is a template of cano framework.",
+    "main": "server.js",
+    "repository": "http://",
+    "author": "Ernesto Rojas <ernesto20145@gmail.com>",
+    "license": "Apache-2.0",
+    "scripts": {
+        "start": "nodemon server.js --exec babel-node",
+        "build": "babel . --ignore node_modules -d dist",
+        "serve": "node dist/server.js",
+        "test": "mocha -R spec --compilers js:babel-core/register ./test/**/*.js"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "cano-cube-controllers": "https://github.com/cano-koa/cano-cube-controllers.git",
+        "cano-cube-mongoose": "https://github.com/cano-koa/cano-cube-mongoose.git",
+        "cano-cube-policies": "https://github.com/cano-koa/cano-cube-policies.git",
+        "cano-cube-routers": "https://github.com/cano-koa/cano-cube-routers.git",
+        "cano-cube-services": "https://github.com/cano-koa/cano-cube-services.git",
+        "cano-koa": "https://github.com/cano-koa/cano-koa.git",
+        "jsonwebtoken": "^8.2.2",
+        "koa-bodyparser": "^4.2.0",
+        "koa-logger": "^3.2.0",
+        "koa-passport": "^4.1.0",
+        "koa-router": "^7.4.0",
+        "moment": "^2.22.1",
+        "mongoose-model-class": "https://github.com/cano-koa/mongoose-model-class.git",
+        "passport-local": "^1.0.0",
+        "ramda": "^0.25.0",
+        "rand-token": "^0.4.0",
+        "search-service-mongoose": "^2.1.2",
+        "winston": "^2.4.2"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+        "babel-plugin-transform-runtime": "^6.23.0",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-stage-2": "^6.24.1",
+        "babel-register": "^6.26.0",
+        "eslint": "^3.19.0",
+        "eslint-config-airbnb-base": "^11.2.0",
+        "eslint-plugin-import": "^2.3.0",
+        "mocha": "^5.2.0",
+        "nodemon": "^1.17.4"
+    }
+}
