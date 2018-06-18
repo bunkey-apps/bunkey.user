@@ -36,5 +36,7 @@
     },
     "globals": {
         "cano": true,
+        "ErrorService": true,
+        "TokenService": true,
     }
 }

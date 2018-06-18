@@ -1,15 +1,16 @@
 import Router from 'koa-router';
 
-const { UserController, AuthController } = cano.app.controllers;
-const { AuthPolicies: { localAuth } } = cano.app.policies;
+const { UserController } = cano.app.controllers;
+const { AuthPolicies: { apiKey } } = cano.app.policies;
 
 const router = new Router({ prefix: '/users' });
+const isApigateway = apiKey('apigateway');
 
 router
-      .post('/', UserController.create)
-      .get('/', UserController.get)
-      .get('/:id', UserController.getById)
-      .put('/:id', UserController.updateById)
-      .delete('/:id', UserController.deleteById);
+      .post('/', isApigateway, UserController.create)
+      .get('/', isApigateway, UserController.get)
+      .get('/:id', isApigateway, UserController.getById)
+      .put('/:id', isApigateway, UserController.updateById)
+      .delete('/:id', isApigateway, UserController.deleteById);
 
-module.exports = router
+module.exports = router;
