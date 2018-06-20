@@ -11,3 +11,4 @@ The Bunkey User microservice
 | MONGODB_URI | URI of connection to mongodb |
 | ADMIN_APIKEY | API key assigned to micro admin service |
 | API_GATEWAY_APIKEY | API key assigned to API Gateway |
+| JWT_TOKEN_SECRET | The JWT secret key |

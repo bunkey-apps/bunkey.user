@@ -31,6 +31,7 @@
         "koa-router": "^7.4.0",
         "moment": "^2.22.1",
         "mongoose-model-class": "https://github.com/cano-koa/mongoose-model-class.git",
+        "morgan": "^1.9.0",
         "passport-local": "^1.0.0",
         "passport-localapikey-update": "^0.6.0",
         "ramda": "^0.25.0",
