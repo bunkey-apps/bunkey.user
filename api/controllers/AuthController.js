@@ -8,28 +8,18 @@ class AuthController {
     }
 
     async logout(ctx) {
-        try {
-            const { body: { refreshToken, _id } } = ctx.request;
-            const user = await User.getById(_id, '');
-            await user.removeRefreshToken(refreshToken);
-            ctx.status = 204;
-            return true;
-        } catch (e) {
-            ErrorService.send(ctx, e);
-        }
+        const { body: { refreshToken, _id } } = ctx.request;
+        const user = await User.getById(_id, '');
+        await user.removeRefreshToken(refreshToken);
+        ctx.status = 204;
+        return true;
     }
 
     async refreshToken(ctx) {
-        try {
-            const { body: { refreshToken } } = ctx.request;
-            const accessToken = await User.refreshToken(refreshToken);
-            console.log(accessToken);
-            ctx.status = 200;
-            ctx.body = accessToken;
-        } catch (e) {
-            console.log();
-            ErrorService.send(ctx, e);
-        }
+        const { body: { refreshToken } } = ctx.request;
+        const accessToken = await User.refreshToken(refreshToken);
+        ctx.status = 200;
+        ctx.body = accessToken;
 	}
 }
 

@@ -1,8 +1,11 @@
 module.exports = {
 	stores: {
 		mongo: {
-			connection: { uri: 'mongodb://user:123@localhost:27017/bunkey_users' },
-    },
+			connection: {
+				uri: process.env.MONGODB_URI,
+			},
+			adapter: 'mongoose',
+		},
 	},
 	storeDefault: 'mongo',
 };

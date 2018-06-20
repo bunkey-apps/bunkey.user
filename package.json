@@ -13,8 +13,10 @@
         "test": "mocha -R spec --compilers js:babel-core/register ./test/**/*.js"
     },
     "dependencies": {
+        "@koa/cors": "^2.2.1",
         "bcryptjs": "^2.4.3",
         "cano-cube-controllers": "https://github.com/cano-koa/cano-cube-controllers.git",
+        "cano-cube-error": "git+https://github.com/cano-koa/cano-cube-error.git",
         "cano-cube-mongoose": "https://github.com/cano-koa/cano-cube-mongoose.git",
         "cano-cube-passport": "https://github.com/cano-koa/cano-cube-passport.git",
         "cano-cube-policies": "https://github.com/cano-koa/cano-cube-policies.git",

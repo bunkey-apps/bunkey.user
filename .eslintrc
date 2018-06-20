@@ -38,5 +38,11 @@
         "cano": true,
         "ErrorService": true,
         "TokenService": true,
+        "UserService": true,
+        "CanoError": true,
+        "UserError": true,
+        "GenericError": true,
+        "RequestError": true,
+        "AuthorizationError": true,
     }
 }

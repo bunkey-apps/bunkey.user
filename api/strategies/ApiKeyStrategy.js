@@ -32,7 +32,7 @@ class ApiKeyStrategy extends Strategy {
      */
     static verify(apikey, done) {
         if (!cano.app.config.apiKeys[apikey]) {
-            return done(ErrorService.new(`You have provided an Invalid API Key ${apikey}`, 401));
+            return done(new AuthorizationError('Unauthorized', `You have provided an Invalid API Key ${apikey}`));
         }
         return done(null, cano.app.config.apiKeys[apikey]);
     }

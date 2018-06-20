@@ -8,7 +8,7 @@ class TokenService {
     }
 
     createToken(payload, expiresIn = '3d') {
-        return jwt.sign(payload, 'my-secret-key', { expiresIn });
+        return jwt.sign(payload, process.env.JWT_TOKEN_SECRET, { expiresIn });
     }
 }
 

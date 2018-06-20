@@ -3,24 +3,18 @@
 
 class AuthPolicies {
     async localAuth(ctx, next) {
-        const cb = async (err, accessToken, info) => {
-            console.log(err);
-            if (info) {
-                ctx.status = 400;
-                ctx.body = { message: info.message };
+        const cb = async (err, accessToken, missingCredentials) => {
+            if (missingCredentials) {
+                throw new RequestError('MissingFields', 'You have missing some credentials fields.');
             } else if (err) {
-                ctx.status = err.status;
-                ctx.body = err;
-                cano.log.error(err);
+                throw err;
             } else {
                 ctx.status = 200;
                 ctx.state.data = accessToken;
                 await next();
             }
         };
-        return cano.passport.authenticate('local', {
-            badRequestMessage: 'You must to provide all the login fields',
-        }, cb)(ctx, next);
+        return cano.passport.authenticate('local', cb)(ctx, next);
     }
 
     apiKey(services = []) {
@@ -28,22 +22,15 @@ class AuthPolicies {
         return async (ctx, next) => {
             const cb = async (err, serviceName, invalid) => {
                 if (invalid) {
-                    ctx.status = 401;
-                    ctx.body = invalid;
-                    cano.log.error(invalid);
+                    throw new AuthorizationError('Unauthorized', invalid.message);
                 } else if (err) {
-                    ctx.status = err.status || 500;
-                    ctx.body = err;
-                    cano.log.error(err);
+                    throw err;
                 } else if (servicesArray.length === 0) {
                     await next();
                 } else if (servicesArray.includes(serviceName)) {
                     await next();
                 } else {
-                    const error = { message: 'Invalid access from another service' };
-                    ctx.status = 403;
-                    ctx.body = error;
-                    cano.log.error(error);
+                    throw new AuthorizationError('InvalidAccess', 'Invalid access from another service');
                 }
             };
             return cano.passport.authenticate('localapikey', cb)(ctx, next);

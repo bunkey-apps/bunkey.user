@@ -72,10 +72,9 @@ class User extends MongooseModel {
       }
 
     static async getById(id, fields = '-password -refreshTokens') {
-        const { ErrorService } = cano.app.services;
         const user = await this.findById(id).select(fields);
         if (!user) {
-            throw ErrorService.new('User not found', 404);
+            throw new UserError('UserNotFound', 'User not found.');
         }
         return user;
     }
@@ -99,19 +98,20 @@ class User extends MongooseModel {
     }
 
     static async refreshToken(refreshToken) {
-        const { ErrorService, TokenService } = cano.app.services;
         const user = await this.findOne({
             refreshTokens: refreshToken,
         }).select('id role').lean(true);
-        if (!user) throw ErrorService.new('Not Authorized', 401);
+        if (!user) {
+            throw new AuthorizationError('InsufficientPrivileges', 'Does not have the necessary privileges to perform this operation.');
+        }
         return {
             accessToken: TokenService.createToken(user),
         };
     }
 
-    beforeSave(next) {
-        bcrypt.hash(this.password, 10, (err, hash) => {
-            this.password = hash;
+    beforeSave(doc, next) {
+        bcrypt.hash(doc.password, 10, (err, hash) => {
+            doc.password = hash;
             next();
         });
     }
@@ -131,7 +131,6 @@ class User extends MongooseModel {
 
     removeRefreshToken(refreshToken) {
         const filterByRefreshToken = Util.filterEqualsBy(refreshToken);
-        console.log(this);
         const refreshTokens = filterByRefreshToken(this.refreshTokens);
         return this.model('User').findByIdAndUpdate(this.id, {
             $set: {

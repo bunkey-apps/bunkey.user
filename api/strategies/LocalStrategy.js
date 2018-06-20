@@ -31,9 +31,8 @@ class LocalStrategy extends Strategy {
             let user = await User.findOne({ email }).select('id role password refreshTokens');
 
             if (!user || !user.isValidPassword(password)) {
-                throw ErrorService.new('The credentials are invalid', 401);
+                throw new RequestError('InvalidCredentials', 'The credentials are invalids.');
             }
-
             const refreshToken = TokenService.createRefreshToken();
             await user.addRefreshToken(refreshToken);
             user = user.toObject();

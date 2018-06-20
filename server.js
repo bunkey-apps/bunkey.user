@@ -1,5 +1,6 @@
 import Cano from 'cano-koa';
 
+require('dotenv').config();
 // Create a new instance of cano app
 const app = new Cano(__dirname);
 

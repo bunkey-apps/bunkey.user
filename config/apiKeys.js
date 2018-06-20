@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const keygen = key => process.env[key];
 
 module.exports = {
