@@ -1,0 +1,12 @@
+{
+    "refreshTokens": [],
+    "clientAssignEditor": [],
+    "favorites": [],
+    "status": true,
+    "_id": "5b305152d9317d33e87c2620",
+    "email": "test@gmail.com",
+    "name": "user test",
+    "role": "admin",
+    "createdAt": "2018-06-25T02:20:02.606Z",
+    "updatedAt": "2018-06-25T02:20:02.606Z"
+}

@@ -10,7 +10,7 @@
         "start": "nodemon server.js --exec babel-node",
         "build": "babel . --ignore node_modules -d dist",
         "serve": "node dist/server.js",
-        "test": "mocha -R spec --compilers js:babel-core/register ./test/**/*.js"
+        "test": "mocha -w -R spec --compilers js:babel-core/register ./test/**/**/*.js"
     },
     "dependencies": {
         "@koa/cors": "^2.2.1",
@@ -23,6 +23,7 @@
         "cano-cube-routers": "https://github.com/cano-koa/cano-cube-routers.git",
         "cano-cube-services": "https://github.com/cano-koa/cano-cube-services.git",
         "cano-koa": "https://github.com/cano-koa/cano-koa.git",
+        "chai-arrays": "^2.0.0",
         "dotenv": "^6.0.0",
         "jsonwebtoken": "^8.2.2",
         "koa-bodyparser": "^4.2.0",
@@ -46,10 +47,13 @@
         "babel-preset-env": "^1.7.0",
         "babel-preset-stage-2": "^6.24.1",
         "babel-register": "^6.26.0",
+        "chai": "^4.1.2",
         "eslint": "^3.19.0",
         "eslint-config-airbnb-base": "^11.2.0",
         "eslint-plugin-import": "^2.3.0",
         "mocha": "^5.2.0",
-        "nodemon": "^1.17.4"
+        "nodemon": "^1.17.4",
+        "sinon": "^6.0.1",
+        "sinon-chai": "^3.2.0"
     }
 }
