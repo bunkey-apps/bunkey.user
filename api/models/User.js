@@ -109,9 +109,9 @@ class User extends MongooseModel {
         };
     }
 
-    beforeSave(doc, next) {
-        bcrypt.hash(doc.password, 10, (err, hash) => {
-            doc.password = hash;
+    beforeSave(next) {
+        bcrypt.hash(this.password, 10, (err, hash) => {
+            this.password = hash;
             next();
         });
     }
