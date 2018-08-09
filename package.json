@@ -4,7 +4,7 @@
     "description": "This is a template of cano framework.",
     "main": "server.js",
     "repository": "http://",
-    "author": "Ernesto Rojas <ernesto20145@gmail.com>",
+    "author": "Ernesto Rojas ernesto20145@gmail.com",
     "license": "Apache-2.0",
     "scripts": {
         "start": "nodemon server.js --exec babel-node",
@@ -15,7 +15,6 @@
     "dependencies": {
         "@koa/cors": "^2.2.1",
         "bcryptjs": "^2.4.3",
-<<<<<<< HEAD
         "cano-cube-controllers": "^1.0.0",
         "cano-cube-error": "^2.0.1",
         "cano-cube-mongoose": "^2.0.0",
@@ -24,17 +23,6 @@
         "cano-cube-routers": "^1.0.1",
         "cano-cube-services": "^1.0.0",
         "cano-koa": "^1.1.2",
-=======
-        "cano-cube-controllers": "https://github.com/cano-koa/cano-cube-controllers.git",
-        "cano-cube-error": "git+https://github.com/cano-koa/cano-cube-error.git",
-        "cano-cube-mongoose": "https://github.com/cano-koa/cano-cube-mongoose.git",
-        "cano-cube-passport": "https://github.com/cano-koa/cano-cube-passport.git",
-        "cano-cube-policies": "https://github.com/cano-koa/cano-cube-policies.git",
-        "cano-cube-routers": "https://github.com/cano-koa/cano-cube-routers.git",
-        "cano-cube-services": "https://github.com/cano-koa/cano-cube-services.git",
-        "cano-koa": "https://github.com/cano-koa/cano-koa.git",
-        "chai-arrays": "^2.0.0",
->>>>>>> 1db36df9038c0ee49eb52c7dd15aa8424bdb8978
         "dotenv": "^6.0.0",
         "jsonwebtoken": "^8.2.2",
         "koa-bodyparser": "^4.2.0",
