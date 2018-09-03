@@ -60,10 +60,22 @@ class User extends MongooseModel {
         };
     }
 
-    // static get(query) {
-    //     const criteria = {};
-    //     return this.find(criteria).select('-password -refreshTokens');
-    // }
+    async beforeSave(doc, next) {
+        if (doc.role === 'operator' && !doc.clientOwner) {
+            throw new RequestError('MissingFields', 'Client Owner unspecified.');
+        }
+        if (doc.role === 'operator') {
+            const result = await ClientService.existClientById(doc.clientOwner);
+            if (!result) {
+                cano.log.debug('result', result);
+                throw new UserError('ClientOwnerNotFound', `Client Owner ${doc.clientOwner} Not Found.`);
+            }
+        }
+        bcrypt.hash(doc.password, 10, (err, hash) => {
+            doc.password = hash;
+            next();
+        });
+    }
 
     static get(query) {
         const criteria = buildCriteria(query);
@@ -107,13 +119,6 @@ class User extends MongooseModel {
         return {
             accessToken: TokenService.createToken(user),
         };
-    }
-
-    beforeSave(next) {
-        bcrypt.hash(this.password, 10, (err, hash) => {
-            this.password = hash;
-            next();
-        });
     }
 
     isValidPassword(password) {
