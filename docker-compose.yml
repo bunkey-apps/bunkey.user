@@ -1,0 +1,22 @@
+version: "3.2"
+
+services:
+
+  user:
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - "20145:20145"
+    environment:
+      NODE_ENV: development
+      API_GATEWAY_APIKEY: 7a4d9bd89cdb450fba09fb879437b11c
+      MONGODB_URI: mongodb://mongo
+  redis:
+    image: redis:4.0-alpine
+    ports:
+      - "6379:6379"
+  mongo:
+    image: mongo:3.2-jessie
+    ports:
+      - "27018:27017"

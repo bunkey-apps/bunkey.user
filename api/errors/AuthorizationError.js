@@ -1,4 +1,4 @@
-{
+module.exports = {
     "Unauthorized": {
         "description": "Invalid apikey.",
         "status": 401

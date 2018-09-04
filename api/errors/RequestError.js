@@ -1,4 +1,4 @@
-{
+module.exports = {
     "opts": {
         "UnknownError": {
             "code": "RequestUnknownError",
