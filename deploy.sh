@@ -1,4 +1,15 @@
 #!/bin/bash
+
+while getopts d: option
+do
+case "${option}"
+in
+d) DOCKER_REPO_NAME=${OPTARG};;
+esac
+done
+
+echo "DOCKER_REPO_NAME:" $DOCKER_REPO_NAME
+
 docker build -t $DOCKER_REPO_NAME .
 DOCKER_BUILD_ID=$(docker images $DOCKER_REPO_NAME -q)
 DOCKER_REGISTRY=antonio94js
