@@ -10,6 +10,10 @@ module.exports = {
         "status": 404,
         "description": "User not found."
     },
+    "ClientOwnerNotFound": {
+        "status": 404,
+        "description": "Client Owner specified not found."
+    },
     "UserAlreadyExist": {
         "status": 409,
         "description": "The User Already Exist."

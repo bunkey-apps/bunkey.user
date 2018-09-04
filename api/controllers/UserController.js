@@ -4,6 +4,7 @@ class UserController {
 
     async create(ctx) {
         const { body } = ctx.request;
+        cano.log.debug('body', body);
         const user = await User.create(body);
         ctx.status = 201;
         ctx.body = user;
