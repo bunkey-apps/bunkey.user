@@ -1,14 +1,14 @@
 module.exports = {
-    "Unauthorized": {
-        "description": "Invalid apikey.",
-        "status": 401
+    Unauthorized: {
+        description: 'Invalid apikey.',
+        status: 401,
     },
-    "InsufficientPrivileges": {
-        "description": "Does not have the necessary privileges to perform this operation.",
-        "status": 403
+    InsufficientPrivileges: {
+        description: 'Does not have the necessary privileges to perform this operation.',
+        status: 403,
     },
-    "InvalidAccess": {
-        "description": "Invalid access from another service.",
-        "status": 403
-    }
-}
+    InvalidAccess: {
+        description: 'Invalid access from another service.',
+        status: 403,
+    },
+};

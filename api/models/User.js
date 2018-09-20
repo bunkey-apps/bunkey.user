@@ -7,7 +7,6 @@ import Util from '../../util';
 
 const modelFields = [
   'email',
-  'password',
   'name',
   'role',
   'workspace',
@@ -61,27 +60,31 @@ class User extends MongooseModel {
     }
 
     async beforeSave(doc, next) {
-        if (doc.role === 'operator' && !doc.clientOwner) {
-            throw new RequestError('MissingFields', 'Client Owner unspecified.');
-        }
-        if (doc.role === 'operator') {
-            const result = await ClientService.existClientById(doc.clientOwner);
-            if (!result) {
-                cano.log.debug('result', result);
-                throw new UserError('ClientOwnerNotFound', `Client Owner ${doc.clientOwner} Not Found.`);
+        try {
+            const isClientOrOperator = (doc.role === 'client' || doc.role === 'operator');
+            if (isClientOrOperator && !doc.clientOwner) {
+                throw new RequestError('MissingFields', 'Client Owner unspecified.');
             }
-        }
-        bcrypt.hash(doc.password, 10, (err, hash) => {
-            doc.password = hash;
+            if (isClientOrOperator) {
+                const result = await ClientService.existClientById(doc.clientOwner);
+                if (!result) {
+                    cano.log.debug('result', result);
+                    throw new UserError('ClientOwnerNotFound', `Client Owner ${doc.clientOwner} Not Found.`);
+                }
+            }
+            const salt = bcrypt.genSaltSync(10);
+            doc.password = bcrypt.hashSync(doc.password, salt);
             next();
-        });
+        } catch (error) {
+            next(error);
+        }
     }
 
     static get(query) {
         const criteria = buildCriteria(query);
         const opts = buildOpts(query);
         return SearchService.search(this, criteria, opts);
-      }
+    }
 
     static async getById(id, fields = '-password -refreshTokens') {
         const user = await this.findById(id).select(fields);
@@ -122,7 +125,7 @@ class User extends MongooseModel {
     }
 
     isValidPassword(password) {
-        return bcrypt.compareSync(password, this.password);
+      return bcrypt.compareSync(password, this.password);
     }
 
     addRefreshToken(refreshToken) {
@@ -175,11 +178,14 @@ function buildOpts(query) {
   return { page, limit, orderBy, fields };
 }
 
-function buildCriteria({ search, fromDate, toDate }) {
+function buildCriteria({ clientOwner, search, fromDate, toDate }) {
   const criteria = {};
   const filterDate = [];
   if (search) {
     Object.assign(criteria, { $text: { $search: search } });
+  }
+  if (clientOwner) {
+    Object.assign(criteria, { clientOwner: MongooseModel.adapter.Types.ObjectId(clientOwner) }); 
   }
   if (fromDate) {
     filterDate.push({

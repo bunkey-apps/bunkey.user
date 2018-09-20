@@ -28,6 +28,7 @@ class LocalStrategy extends Strategy {
     static async verify(email, password, done) {
         try {
             const { User } = cano.app.models;
+            cano.log.debug('email, password', email, password);
             let user = await User.findOne({ email }).select('id role password refreshTokens');
 
             if (!user || !user.isValidPassword(password)) {
