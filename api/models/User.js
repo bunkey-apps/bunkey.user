@@ -8,6 +8,7 @@ import Util from '../../util';
 const modelFields = [
   'email',
   'name',
+  'avatar',
   'role',
   'workspace',
   'status',
@@ -34,6 +35,9 @@ class User extends MongooseModel {
                 type: String,
                 required: true,
                 index: true,
+            },
+            avatar: {
+                type: String,
             },
             role: {
                 type: String,
