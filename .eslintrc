@@ -44,6 +44,7 @@
         "GenericError": true,
         "RequestError": true,
         "ClientService": true,
+        "EmailService": true,
         "AuthorizationError": true
     }
 }

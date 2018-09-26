@@ -9,6 +9,7 @@ const router = new Router({ prefix: '/auth' });
 router
       .post('/', isApigateway, localAuth, AuthController.login)
       .post('/refresh-token', isApigateway, AuthController.refreshToken)
+      .post('/recovery-password', isApigateway, AuthController.recoveryPassword)
       .post('/logout', isApigateway, AuthController.logout);
 
 module.exports = router;

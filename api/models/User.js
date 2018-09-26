@@ -2,6 +2,7 @@
 import SearchService from 'search-service-mongoose';
 import MongooseModel from 'mongoose-model-class';
 import bcrypt from 'bcryptjs';
+import generator from 'generate-password';
 import moment from 'moment';
 import Util from '../../util';
 
@@ -126,6 +127,21 @@ class User extends MongooseModel {
         return {
             accessToken: TokenService.createToken(user),
         };
+    }
+
+    static async recoveryPassword(email) {
+        const user = await this.findOne({ email });
+        if (!user) {
+            throw new UserError('UserNotFound', 'User not found.');
+        }
+        const newPassword = generator.generate({ length: 10, numbers: true });
+        await EmailService.sendNewPassword({
+            to: email,
+            name: user.name,
+            password: newPassword,
+        });
+        user.password = newPassword;
+        return user.save();
     }
 
     isValidPassword(password) {

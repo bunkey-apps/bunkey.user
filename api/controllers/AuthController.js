@@ -20,7 +20,14 @@ class AuthController {
         const accessToken = await User.refreshToken(refreshToken);
         ctx.status = 200;
         ctx.body = accessToken;
-	}
+    }
+    
+    async recoveryPassword(ctx) {
+        const { body: { email } } = ctx.request;
+        cano.log.debug('email', email);
+        await User.recoveryPassword(email);
+        ctx.status = 204;
+    }
 }
 
 module.exports = AuthController;
