@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 class Util {
     static pickFields(rol) {
-        const commonFields = ['email', 'name', 'status'];
+        const commonFields = ['email', 'name', 'status', 'avatar'];
         switch (rol) {
             case 'editor': {
                 const editorFields = ['clientAssignEditor'];
