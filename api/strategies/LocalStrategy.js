@@ -29,7 +29,7 @@ class LocalStrategy extends Strategy {
         try {
             const { User } = cano.app.models;
             cano.log.debug('email, password', email, password);
-            let user = await User.findOne({ email }).select('id role password refreshTokens');
+            let user = await User.findOne({ email });
 
             if (!user || !user.isValidPassword(password)) {
                 throw new RequestError('InvalidCredentials', 'The credentials are invalids.');
@@ -39,7 +39,7 @@ class LocalStrategy extends Strategy {
             user = user.toObject();
             delete user.password;
             delete user.refreshTokens;
-            const accessToken = TokenService.createToken(user);
+            const accessToken = TokenService.createToken({ user });
 
             return done(null, { accessToken, refreshToken });
         } catch (e) {

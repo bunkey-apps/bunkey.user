@@ -11,6 +11,7 @@ router
       .get('/', isApigateway, UserController.get)
       .get('/:id', isApigateway, UserController.getById)
       .put('/:id', isApigateway, UserController.updateById)
-      .delete('/:id', isApigateway, UserController.deleteById);
+      .delete('/:id', isApigateway, UserController.deleteById)
+      .delete('/:id/work-clients/:client', isApigateway, UserController.removeWorkClient);
 
 module.exports = router;

@@ -4,15 +4,13 @@ const headers = {
 };
 
 class ClientService {
-    async existClientById(id) {
+    async getById(id) {
       try {
         const { RequestService } = cano.app.services;
         const request = RequestService.create(baseUrl);
         const response = await request.get(`/clients/${id}`, { headers });
-        cano.log.debug('ClientService -> existClientById -> response', response);
-        return true;
+        return response;
       } catch (error) {
-        cano.log.error('ClientService -> existClientById -> error', error);
         if (error.status === 404) {
           return false;
         }

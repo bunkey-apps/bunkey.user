@@ -42,9 +42,12 @@
         "CanoError": true,
         "UserError": true,
         "GenericError": true,
+        "InvitationError": true,
         "RequestError": true,
         "ClientService": true,
         "EmailService": true,
+        "User": true,
+        "Invitation": true,
         "AuthorizationError": true
     }
 }

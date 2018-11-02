@@ -1,5 +1,4 @@
 const { User } = cano.app.models;
-const { ErrorService } = cano.app.services;
 
 class AuthController {
 

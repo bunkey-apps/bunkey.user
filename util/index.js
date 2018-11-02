@@ -1,5 +1,5 @@
 import R from 'ramda';
-import bcrypt from 'bcryptjs';
+import moment from 'moment';
 
 class Util {
     static pickFields(rol) {
@@ -29,6 +29,10 @@ class Util {
     static filterEqualsBy(comparator) {
         console.log(comparator);
         return R.filter(R.equals(comparator));
+    }
+    
+    static isExpired(date) {
+        return moment().isAfter(date);
     }
 }
 

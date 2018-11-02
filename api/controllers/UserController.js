@@ -41,6 +41,13 @@ class UserController {
         ctx.status = 204;
     }
 
+    async removeWorkClient(ctx) {
+        const { id, client } = ctx.params;
+        const user = await User.getById(id);
+        await user.removeWorkClient(client);
+        ctx.status = 204;
+    }
+
 }
 
 module.exports = UserController;

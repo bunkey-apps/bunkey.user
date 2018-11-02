@@ -2,19 +2,41 @@ import Nodemailer from 'nodemailer';
 
 class EmailService {
   constructor() {
-    // cano.log.debug('process.env.HOST_MAIL', process.env.HOST_MAIL);
-    // cano.log.debug('process.env.PORT_MAIL', process.env.PORT_MAIL);
-    // cano.log.debug('process.env.EMAIL_USER', process.env.EMAIL_USER);
-    // cano.log.debug('process.env.PASSWORD_USER', process.env.PASSWORD_USER);
-    // cano.log.debug('process.env.FROM_MAIL', process.env.FROM_MAIL);
+    // this.transporter = Nodemailer.createTransport({
+    //   host: process.env.HOST_MAIL,
+    //   port: process.env.PORT_MAIL,
+    //   secure: true,
+    //   auth: {
+    //       user: process.env.EMAIL_USER,
+    //       pass: process.env.PASSWORD_USER,
+    //   },
+    // });
     this.transporter = Nodemailer.createTransport({
-      host: process.env.HOST_MAIL,
-      port: process.env.PORT_MAIL,
-      secure: true,
+      service: 'gmail',
       auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.PASSWORD_USER,
       },
+    });
+  }
+  sendIntitation(invitation, client) {
+    const { fullname, email, webToken } = invitation;
+    const mailOptions = {
+      from: process.env.FROM_MAIL,
+      to: email,
+      subject: 'Invitación a Bunkey',
+      html: `<p>Hola ${fullname}, nuestro cliente ${client.name} te ha invitado a a formar parte de su grupo de trabajo.</p>
+      <p>Has click <a href="${TokenService.generateWebURL('invitation', webToken)}">aquí</a> para aceptar.</p>`,
+    };
+    return new Promise((resolve, reject) => {
+      this.transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          cano.log.error(error);
+          reject(error);
+          return;
+        }
+        resolve(info);
+      });
     });
   }
   sendNewPassword({ to, subject = 'Solicitud de nueva contraseña', name, password }) {

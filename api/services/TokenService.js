@@ -1,15 +1,29 @@
 import jwt from 'jsonwebtoken';
 import randtoken from 'rand-token';
-// process.env.SECRET_JWT_KEY
+
 class TokenService {
 
-    createRefreshToken() {
-        return randtoken.uid(256);
-    }
+  createRefreshToken() {
+    return randtoken.uid(256);
+  }
 
-    createToken(payload, expiresIn = '3d') {
-        return jwt.sign(payload, process.env.JWT_TOKEN_SECRET, { expiresIn });
+  createToken(payload, expiresIn = '3d') {
+    cano.log.debug('TokenService -> createToken -> payload', payload);
+    return jwt.sign(payload, process.env.JWT_TOKEN_SECRET, { expiresIn });
+  }
+
+  createWebToken(size = 256) {
+    return randtoken.uid(size);
+  }
+
+  generateWebURL(purpose, webToken) {
+    switch (purpose) {
+      case 'invitation': {
+        return `${process.env.INVITATION_URL}?webToken=${webToken}`;
+      }
+      default:
     }
+  }
 }
 
 module.exports = TokenService;

@@ -22,4 +22,8 @@ module.exports = {
         status: 409,
         description: 'There is a conflict with the user entity.',
     },
+    CurrentPasswordSentInvalid: {
+        status: 400,
+        description: 'Current password sent invalid.',
+    },
 };

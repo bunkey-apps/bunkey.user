@@ -1,11 +1,11 @@
-import bcrypt from 'bcryptjs';
 import Util from '../../util';
 
 class UserService {
     async update(data) {
+        cano.log.debug('data', data);
         const { User } = cano.app.models;
 
-        if (data.password) {
+        if (data.action === 'updatePassword') {
             return this.updatePassword(data);
         }
 
@@ -24,11 +24,16 @@ class UserService {
         return true;
     }
 
-    async updatePassword({ password, id }) {
-        const { User } = cano.app.models;
-        const hash = await bcrypt.hash(password, 10);
-        await User.updateById(id, { password: hash });
-        return true;
+    async updatePassword({ id, currentPassword, newPassword }) {
+        if (!currentPassword || !newPassword) {
+            throw new RequestError('InvalidRequestPayload', 'You have provided an invalid rol');
+        }
+        const user = await User.getById(id, 'password');
+        if (!user.isValidPassword(currentPassword)) {
+            throw new UserError('CurrentPasswordSentInvalid', 'Current password sent invalid.');
+        }
+        user.password = newPassword;
+        return user.save();
     }
 }
 
