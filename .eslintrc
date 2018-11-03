@@ -36,6 +36,8 @@
     },
     "globals": {
         "cano": true,
+        "RequestService": true,
+        "ObjectService": true,
         "ErrorService": true,
         "TokenService": true,
         "UserService": true,

@@ -122,13 +122,15 @@ class User extends MongooseModel {
     return user.save();
   }
 
-  addWorkClient(client) {
+  async addWorkClient(client) {
     const criteria = { _id: this.id };
+    await ObjectService.createWorkspace(this.id, client);
     return this.model('User').updateOne(criteria, { $addToSet: { workClients: client } });
   }
 
-  removeWorkClient(client) {
+  async removeWorkClient(client) {
     const criteria = { _id: this.id };
+    await ObjectService.deleteWorkspace(this.id, client);
     return this.model('User').updateOne(criteria, { $pull: { workClients: client } });
   }
 

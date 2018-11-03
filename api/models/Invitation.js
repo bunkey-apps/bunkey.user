@@ -1,9 +1,9 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint no-use-before-define: 0 */
 import MongooseModel from 'mongoose-model-class';
 import moment from 'moment';
 import includes from 'lodash/includes';
 import Util from '../../util';
-import { Object } from 'core-js';
 
 class Invitation extends MongooseModel {
   schema() {

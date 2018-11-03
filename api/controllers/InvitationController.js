@@ -1,4 +1,5 @@
 import moment from 'moment';
+import ObjectService from '../services/ObjectService';
 
 class InvitationController {
     async create(ctx) {
