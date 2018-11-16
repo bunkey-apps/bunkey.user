@@ -6,13 +6,13 @@ const headers = {
 class ObjectService {
   async createWorkspace(user, client) {
     const request = RequestService.create(baseUrl);
-    const response = await request.post(`/users/${user}/clients/${client}/workspaces`, {}, { headers });
+    const response = await request.post(`/users/${user}/clients/${client}/favorites`, {}, { headers });
     return response;
   }
 
   async deleteWorkspace(user, client) {
     const request = RequestService.create(baseUrl);
-    const response = await request.delete(`/users/${user}/clients/${client}/workspaces`, {}, { headers });
+    const response = await request.delete(`/users/${user}/clients/${client}/favorites`, {}, { headers });
     return response;
   }
 }

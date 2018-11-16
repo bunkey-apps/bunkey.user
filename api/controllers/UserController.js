@@ -1,4 +1,16 @@
-const { User } = cano.app.models;
+import pick from 'lodash/pick';
+
+const modelFields = [
+    'email',
+    'name',
+    'avatar',
+    'role',
+    'workspace',
+    'status',
+    'workClients',
+    'clientOwner',
+    'status',
+  ];
 
 class UserController {
 
@@ -7,7 +19,7 @@ class UserController {
         cano.log.debug('body', body);
         const user = await User.create(body);
         ctx.status = 201;
-        ctx.body = user;
+        ctx.body = pick(user, modelFields);
     }
 
     async get(ctx) {

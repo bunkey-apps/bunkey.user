@@ -1,6 +1,3 @@
-// import passport from 'koa-passport';
-// import LocalStrategy from '../strategies/LocalStrategy';
-
 class AuthPolicies {
     async localAuth(ctx, next) {
         const cb = async (err, accessToken, missingCredentials) => {

@@ -14,10 +14,8 @@ const modelFields = [
   'role',
   'workspace',
   'status',
-  'clientOwner', // @TODO: Remove this after update to front.
   'workClients',
-  'clientAssignEditor', // @TODO: Remove this after update to front.
-  'favorites',
+  'clientOwner',
   'status',
 ];
 
@@ -30,11 +28,8 @@ class User extends MongooseModel {
       avatar: { type: String },
       role: { type: String, required: true, enum: ['admin', 'editor', 'client', 'operator'] },
       refreshTokens: { type: [String], index: true },
-      workspace: { type: MongooseModel.types.ObjectId },
-      clientOwner: { type: MongooseModel.types.ObjectId }, // @TODO: Remove this after update to front.
       workClients: { type: [MongooseModel.types.ObjectId], default: [] },
-      clientAssignEditor: [MongooseModel.types.ObjectId], // @TODO: Remove this after update to front.
-      favorites: [String],
+      clientOwner: { type: MongooseModel.types.ObjectId },
       status: { type: Boolean, default: true },
     };
   }
@@ -191,11 +186,11 @@ function buildOpts(query) {
 function buildCriteria({ clientOwner, search, fromDate, toDate }) {
   const criteria = {};
   const filterDate = [];
-  if (search) {
-    Object.assign(criteria, { $text: { $search: search } });
-  }
   if (clientOwner) {
     Object.assign(criteria, { clientOwner: MongooseModel.adapter.Types.ObjectId(clientOwner) }); 
+  }
+  if (search) {
+    Object.assign(criteria, { $text: { $search: search } });
   }
   if (fromDate) {
     filterDate.push({
