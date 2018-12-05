@@ -8,7 +8,6 @@ class TokenService {
   }
 
   createToken(payload, expiresIn = '3d') {
-    cano.log.debug('TokenService -> createToken -> payload', payload);
     return jwt.sign(payload, process.env.JWT_TOKEN_SECRET, { expiresIn });
   }
 

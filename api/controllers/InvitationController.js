@@ -1,5 +1,4 @@
 import moment from 'moment';
-import ObjectService from '../services/ObjectService';
 
 class InvitationController {
     async create(ctx) {
@@ -10,7 +9,6 @@ class InvitationController {
             throw new UserError('ClientOwnerNotFound', `Client Owner ${client} Not Found.`);
         }
         let invitation = await Invitation.findOne({ fullname, email, client, status: 'pending' });
-        cano.log.debug('invitation', invitation);
         if (!invitation) {
             invitation = await Invitation.create(body);
         } else if (moment().isAfter(invitation.expires)) {

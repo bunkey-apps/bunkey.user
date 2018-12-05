@@ -1,5 +1,3 @@
-const { User } = cano.app.models;
-
 class AuthController {
 
     login(ctx) {
@@ -23,7 +21,6 @@ class AuthController {
     
     async recoveryPassword(ctx) {
         const { body: { email } } = ctx.request;
-        cano.log.debug('email', email);
         await User.recoveryPassword(email);
         ctx.status = 204;
     }
