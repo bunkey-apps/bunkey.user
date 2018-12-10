@@ -20,12 +20,13 @@ class EmailService {
     });
   }
   sendIntitation(invitation, client) {
+    cano.log.debug('client', client.toObject());
     const { fullname, email, webToken } = invitation;
     const mailOptions = {
       from: process.env.FROM_MAIL,
       to: email,
       subject: 'Invitación a Bunkey',
-      html: `<p>Hola ${fullname}, nuestro cliente ${client.name} te ha invitado a a formar parte de su grupo de trabajo.</p>
+      html: `<p>Hola ${fullname}, nuestro cliente ${client.name} te ha invitado a formar parte de su grupo de trabajo.</p>
       <p>Has click <a href="${TokenService.generateWebURL('invitation', webToken)}">aquí</a> para aceptar.</p>`,
     };
     return new Promise((resolve, reject) => {
