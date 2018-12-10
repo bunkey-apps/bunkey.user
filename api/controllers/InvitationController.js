@@ -14,7 +14,7 @@ class InvitationController {
         } else if (moment().isAfter(invitation.expires)) {
             invitation = await Invitation.create(body);
         }
-        await EmailService.sendIntitation(invitation, owner);
+        await EmailService.sendIntitation(invitation, owner.body);
         ctx.status = 204;
     }
 

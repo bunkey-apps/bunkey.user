@@ -20,7 +20,6 @@ class EmailService {
     });
   }
   sendIntitation(invitation, client) {
-    cano.log.debug('client', client.toObject());
     const { fullname, email, webToken } = invitation;
     const mailOptions = {
       from: process.env.FROM_MAIL,
