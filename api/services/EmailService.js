@@ -11,13 +11,6 @@ class EmailService {
           pass: process.env.PASSWORD_USER,
       },
     });
-    // this.transporter = Nodemailer.createTransport({
-    //   service: 'gmail',
-    //   auth: {
-    //       user: process.env.EMAIL_USER,
-    //       pass: process.env.PASSWORD_USER,
-    //   },
-    // });
   }
   sendIntitation(invitation, client) {
     const { fullname, email, webToken } = invitation;
