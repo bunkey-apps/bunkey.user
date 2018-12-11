@@ -8,8 +8,8 @@ const isApigateway = apiKey('apigateway');
 
 router
       .post('/', isApigateway, UserController.create)
-      .get('/', isApigateway, UserController.get)
-      .get('/:id', isApigateway, UserController.getById)
+      .get('/', apiKey(['apigateway', 'object']), UserController.get)
+      .get('/:id', apiKey(['apigateway', 'object']), UserController.getById)
       .put('/:id', isApigateway, UserController.updateById)
       .delete('/:id', isApigateway, UserController.deleteById)
       .delete('/:id/work-clients/:client', isApigateway, UserController.removeWorkClient);

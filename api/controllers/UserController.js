@@ -23,6 +23,7 @@ class UserController {
     }
 
     async get(ctx) {
+        cano.log.debug('Here');
         const { collection, pagination } = await User.get(ctx.request.query);
         ctx.set('X-Pagination-Total-Count', pagination['X-Pagination-Total-Count']);
         ctx.set('X-Pagination-Limit', pagination['X-Pagination-Limit']);

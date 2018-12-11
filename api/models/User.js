@@ -183,11 +183,14 @@ function buildOpts(query) {
   return { page, limit, orderBy, fields };
 }
 
-function buildCriteria({ clientOwner, search, fromDate, toDate }) {
+function buildCriteria({ clientOwner, email, search, fromDate, toDate }) {
   const criteria = {};
   const filterDate = [];
   if (clientOwner) {
     Object.assign(criteria, { clientOwner: MongooseModel.adapter.Types.ObjectId(clientOwner) }); 
+  }
+  if (email) {
+    Object.assign(criteria, { email });
   }
   if (search) {
     Object.assign(criteria, { $text: { $search: search } });

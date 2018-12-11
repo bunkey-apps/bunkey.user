@@ -2,22 +2,22 @@ import Nodemailer from 'nodemailer';
 
 class EmailService {
   constructor() {
-    // this.transporter = Nodemailer.createTransport({
-    //   host: process.env.HOST_MAIL,
-    //   port: process.env.PORT_MAIL,
-    //   secure: true,
-    //   auth: {
-    //       user: process.env.EMAIL_USER,
-    //       pass: process.env.PASSWORD_USER,
-    //   },
-    // });
     this.transporter = Nodemailer.createTransport({
-      service: 'gmail',
+      host: process.env.HOST_MAIL,
+      port: process.env.PORT_MAIL,
+      secure: false,
       auth: {
           user: process.env.EMAIL_USER,
           pass: process.env.PASSWORD_USER,
       },
     });
+    // this.transporter = Nodemailer.createTransport({
+    //   service: 'gmail',
+    //   auth: {
+    //       user: process.env.EMAIL_USER,
+    //       pass: process.env.PASSWORD_USER,
+    //   },
+    // });
   }
   sendIntitation(invitation, client) {
     const { fullname, email, webToken } = invitation;
