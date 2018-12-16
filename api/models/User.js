@@ -5,6 +5,7 @@ import MongooseModel from 'mongoose-model-class';
 import bcrypt from 'bcryptjs';
 import generator from 'generate-password';
 import moment from 'moment';
+import map from 'lodash/map';
 import Util from '../../util';
 
 const modelFields = [
@@ -183,12 +184,30 @@ function buildOpts(query) {
   return { page, limit, orderBy, fields };
 }
 
-function buildCriteria({ clientOwner, email, search, fromDate, toDate }) {
+function buildCriteria({ clientOwner, ids, roles, email, search, fromDate, toDate }) {
   const criteria = {};
   const filterDate = [];
   if (clientOwner) {
     Object.assign(criteria, { clientOwner: MongooseModel.adapter.Types.ObjectId(clientOwner) }); 
   }
+  cano.log.debug('ids', ids);
+  if (ids) {
+    if (!Array.isArray(ids)) {
+      ids = [ids];
+    }
+    Object.assign(criteria, {
+       _id: {
+         $in: map(ids, id => MongooseModel.adapter.Types.ObjectId(id)),
+        },
+    }); 
+  }
+  if (roles) {
+    if (!Array.isArray(roles)) {
+      roles = [roles];
+    }
+    Object.assign(criteria, { role: { $in: roles } }); 
+  }
+  cano.log.debug('criteria', criteria);
   if (email) {
     Object.assign(criteria, { email });
   }
