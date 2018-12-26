@@ -1,4 +1,8 @@
+/* eslint-disable no-use-before-define */
 import Nodemailer from 'nodemailer';
+import replace from 'lodash/replace';
+import fs from 'fs';
+import path from 'path';
 
 class EmailService {
   constructor() {
@@ -13,14 +17,17 @@ class EmailService {
       },
     });
   }
-  sendIntitation(invitation, client) {
+  async sendIntitation(invitation, client) {
     const { fullname, email, webToken } = invitation;
+    const message = `<p>Hola ${fullname}, nuestro cliente ${client.name} te ha invitado a formar parte de su grupo de trabajo.</p>
+    <p>Has click <a href="${TokenService.generateWebURL('invitation', webToken)}">aquí</a> para aceptar.</p>`;
+    const template = await getTemplate();
+    const html = replace(template, '{{message}}', message);
     const mailOptions = {
       from: process.env.FROM_MAIL,
       to: email,
       subject: 'Invitación a Bunkey',
-      html: `<p>Hola ${fullname}, nuestro cliente ${client.name} te ha invitado a formar parte de su grupo de trabajo.</p>
-      <p>Has click <a href="${TokenService.generateWebURL('invitation', webToken)}">aquí</a> para aceptar.</p>`,
+      html,
     };
     return new Promise((resolve, reject) => {
       this.transporter.sendMail(mailOptions, (error, info) => {
@@ -33,12 +40,15 @@ class EmailService {
       });
     });
   }
-  sendNewPassword({ to, subject = 'Solicitud de nueva contraseña', name, password }) {
+  async sendNewPassword({ to, subject = 'Solicitud de nueva contraseña', name, password }) {
+    const message = `<p>Hola ${name}, esta es tu nueva contraseña: <b>${password}</b></p>`;
+    const template = await getTemplate();
+    const html = replace(template, '{{message}}', message);
     const mailOptions = {
       from: process.env.FROM_MAIL,
       to,
       subject,
-      html: `<p>Hola ${name}, esta es tu nueva contraseña: <b>${password}</b></p>`,
+      html,
     };
     return new Promise((resolve, reject) => {
       this.transporter.sendMail(mailOptions, (error, info) => {
@@ -57,6 +67,18 @@ class EmailService {
       });
     });
   }
+}
+
+function getTemplate() {
+  console.log('path', path.join(__dirname, '../assets/template-email.html'));
+  return new Promise((resolve, reject) => {
+    fs.readFile(path.join(__dirname, '../assets/template-email.html'), 'utf8', (err, data) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
 }
 
 export default EmailService;
