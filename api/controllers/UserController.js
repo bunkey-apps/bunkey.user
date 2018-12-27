@@ -18,6 +18,7 @@ class UserController {
         const { body } = ctx.request;
         cano.log.debug('body', body);
         const user = await User.create(body);
+        await ObjectService.createUser(user);
         ctx.status = 201;
         ctx.body = pick(user, modelFields);
     }
@@ -45,12 +46,14 @@ class UserController {
             ...body,
             id,
         });
+        await ObjectService.updateUser(id, body);
         ctx.status = 204;
     }
 
     async deleteById(ctx) {
         const { id } = ctx.params;
         await User.deleteById(id);
+        await ObjectService.deleteUser(id);
         ctx.status = 204;
     }
 

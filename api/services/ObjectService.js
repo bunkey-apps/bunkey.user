@@ -15,6 +15,24 @@ class ObjectService {
     const response = await request.delete(`/users/${user}/clients/${client}/favorites`, {}, { headers });
     return response;
   }
+
+  async createUser(body) {
+    const request = RequestService.create(baseUrl);
+    const response = await request.post('/users', body, { headers });
+    return response;
+  }
+
+  async updateUser(id, body) {
+    const request = RequestService.create(baseUrl);
+    const response = await request.put(`/users/${id}`, body, { headers });
+    return response;
+  }
+
+  async deleteUser(id) {
+    const request = RequestService.create(baseUrl);
+    const response = await request.delete(`/users/${id}`, {}, { headers });
+    return response;
+  }
 }
 
 export default ObjectService;
