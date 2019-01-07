@@ -1,9 +1,15 @@
-import Util from '../../util';
+/* import Util from '../../util'; */
 
 class UserService {
     async update(data) {
         cano.log.debug('data', data);
         const { User } = cano.app.models;
+
+        if (data.password) {
+            const user = await User.getById(data.id);
+            user.password = data.password;
+            return user.save();
+        }
 
         if (data.action === 'updatePassword') {
             return this.updatePassword(data);
@@ -14,13 +20,13 @@ class UserService {
             if (user) throw new UserError('UserAlreadyExist', 'Already exist an user with that email');
         }
 
-        const picker = Util.pickFields(data.role);
+        /* const picker = Util.pickFields(data.role);
 
         if (!picker) {
             throw new RequestError('InvalidRequestPayload', 'You have provided an invalid rol');
         }
-        const object = picker(data);
-        await User.updateById(data.id, object);
+        const object = picker(data); */
+        await User.updateById(data.id, data);
         return true;
     }
 
