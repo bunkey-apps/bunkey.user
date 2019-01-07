@@ -46,7 +46,7 @@ class UserController {
             ...body,
             id,
         });
-        // await ObjectService.updateUser(id, body);
+        await ObjectService.updateUser(id, body);
         ctx.status = 204;
     }
 
